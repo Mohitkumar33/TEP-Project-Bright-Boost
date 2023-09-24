@@ -67,7 +67,7 @@ router.post("/teacherLogin", async (req, res) => {
     { id: teacher.id, email: teacher.email },
     process.env.REACT_APP_JWT_SECRET,
     {
-      expiresIn: "1h", // Token expires in 1 hour
+      expiresIn: "2h", // Token expires in 2 hour
     }
   );
 
