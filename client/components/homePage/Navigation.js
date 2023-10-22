@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import {
   Box,
@@ -17,9 +17,12 @@ import {
   useColorModeValue,
   Stack,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { useAuth } from "../context/auth-context";
+import { useRouter } from "next/router";
 
-const Links = ["Dashboard", "Projects", "Team"];
+// const Links = ["Dashboard", "Projects", "Team"];
 
 const NavLink = (props) => {
   const { children } = props;
@@ -42,7 +45,9 @@ const NavLink = (props) => {
 };
 
 export default function Navigation() {
+  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { authState, setAuthState } = useAuth();
 
   return (
     <>
@@ -57,12 +62,14 @@ export default function Navigation() {
           />
           <HStack spacing={8} alignItems={"center"}>
             <Box>
-              <img
-                src="/assets/logos/Bright_boost_transparent.png"
-                style={{ height: "5rem" }}
-              />
+              <Link href="/studentLogin">
+                <img
+                  src="/assets/logos/Bright_boost_transparent.png"
+                  style={{ height: "5rem" }}
+                />
+              </Link>
             </Box>
-            <HStack
+            {/* <HStack
               as={"nav"}
               spacing={4}
               display={{ base: "none", md: "flex" }}
@@ -70,31 +77,51 @@ export default function Navigation() {
               {Links.map((link) => (
                 <NavLink key={link}>{link}</NavLink>
               ))}
-            </HStack>
+            </HStack> */}
           </HStack>
-          <Flex alignItems={"center"}>
-            <Button
-              variant="outline"
-              m={4}
-              style={{ color: "#603813", border: "1px solid #ED8936" }}
-            >
-              Admin Login
-            </Button>
-            <Button
-              variant="outline"
-              m={4}
-              style={{ color: "#603813", border: "1px solid #ED8936" }}
-            >
-              Teacher Login
-            </Button>
-            <Button
-              variant="outline"
-              m={4}
-              style={{ color: "#603813", border: "1px solid #ED8936" }}
-            >
-              Student Login
-            </Button>
-            {/* <Menu>
+          {authState.isAuth ? (
+            <div>
+              <p>Welcome {authState.userInfo}</p>
+              <button
+                onClick={() => {
+                  localStorage.clear();
+                  setAuthState({});
+                  router.push("/");
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Flex alignItems={"center"}>
+              <Link href="/adminLogin">
+                <Button
+                  variant="outline"
+                  m={4}
+                  style={{ color: "#603813", border: "1px solid #ED8936" }}
+                >
+                  Admin Login
+                </Button>
+              </Link>
+              <Link href="/teacherLogin">
+                <Button
+                  variant="outline"
+                  m={4}
+                  style={{ color: "#603813", border: "1px solid #ED8936" }}
+                >
+                  Teacher Login
+                </Button>
+              </Link>
+              <Link href="/studentLogin">
+                <Button
+                  variant="outline"
+                  m={4}
+                  style={{ color: "#603813", border: "1px solid #ED8936" }}
+                >
+                  Student Login
+                </Button>
+              </Link>
+              {/* <Menu>
               <MenuButton
                 as={Button}
                 rounded={"full"}
@@ -116,7 +143,8 @@ export default function Navigation() {
                 <MenuItem>Link 3</MenuItem>
               </MenuList>
             </Menu> */}
-          </Flex>
+            </Flex>
+          )}
         </Flex>
 
         {isOpen ? (
