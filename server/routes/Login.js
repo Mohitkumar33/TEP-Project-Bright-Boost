@@ -37,7 +37,6 @@ router.post("/adminLogin", async (req, res) => {
     email,
     adminId: admin.id,
   });
-  //   res.send("hello mohit");
 });
 
 router.post("/studentLogin", async (req, res) => {
