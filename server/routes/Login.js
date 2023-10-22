@@ -83,7 +83,6 @@ router.post("/studentLogin", async (req, res) => {
     studentId: student.id,
     // attendenceRecord,
   });
-  //   res.send("hello mohit");
 });
 
 router.post("/teacherLogin", async (req, res) => {
