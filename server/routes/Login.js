@@ -110,7 +110,6 @@ router.post("/teacherLogin", async (req, res) => {
     email,
     teacherId: teacher.id,
   });
-  //   res.send("hello mohit");
 });
 
 module.exports = router;
