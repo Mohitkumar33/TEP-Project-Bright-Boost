@@ -63,7 +63,6 @@ router.post("/studentLogin", async (req, res) => {
   startTime.setHours(15, 30, 0); // Set the start time to 15:30:00
   endTime.setHours(18, 30, 0); // Set the end time to 17:30:00
 
-  // console.log(student);
   if (currentTime >= startTime && currentTime <= endTime) {
     // Record attendance in the Attendance table
     await StudentAttendence.create({
