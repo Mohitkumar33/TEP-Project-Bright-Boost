@@ -4,6 +4,7 @@ const router = express.Router();
 const { Admins } = require("../models");
 const { Students } = require("../models");
 const { Teachers } = require("../models");
+const { StudentAttendence } = require("../models");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -25,11 +26,17 @@ router.post("/adminLogin", async (req, res) => {
     { id: admin.id, email: admin.email },
     process.env.REACT_APP_JWT_SECRET,
     {
-      expiresIn: "1h", // Token expires in 1 hour
+      expiresIn: "2h", // Token expires in 2 hour
     }
   );
 
-  res.json({ token, fullName: admin.fullName });
+  res.json({
+    token,
+    fullName: admin.fullName,
+    type: "admin",
+    email,
+    adminId: admin.id,
+  });
   //   res.send("hello mohit");
 });
 
@@ -46,11 +53,36 @@ router.post("/studentLogin", async (req, res) => {
     { id: student.id, email: student.email },
     process.env.REACT_APP_JWT_SECRET,
     {
-      expiresIn: "1h", // Token expires in 1 hour
+      expiresIn: "2h", // Token expires in 2 hour
     }
   );
 
-  res.json({ token, fullName: student.fullName });
+  const currentTime = new Date();
+  const startTime = new Date();
+  const endTime = new Date();
+
+  startTime.setHours(15, 30, 0); // Set the start time to 15:30:00
+  endTime.setHours(18, 30, 0); // Set the end time to 17:30:00
+
+  // console.log(student);
+  if (currentTime >= startTime && currentTime <= endTime) {
+    // Record attendance in the Attendance table
+    await StudentAttendence.create({
+      studentID: student.id,
+      studentName: student.fullName,
+      date: new Date(),
+      // studentIdDate: student.id + new Date().toISOString(),
+    });
+  }
+
+  res.json({
+    token,
+    fullName: student.fullName,
+    type: "student",
+    email,
+    studentId: student.id,
+    // attendenceRecord,
+  });
   //   res.send("hello mohit");
 });
 
@@ -71,7 +103,13 @@ router.post("/teacherLogin", async (req, res) => {
     }
   );
 
-  res.json({ token, fullName: teacher.fullName });
+  res.json({
+    token,
+    fullName: teacher.fullName,
+    type: "teacher",
+    email,
+    teacherId: teacher.id,
+  });
   //   res.send("hello mohit");
 });
 
