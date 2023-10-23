@@ -31,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     closeAt: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: null,
     },
   });
   return Questions;
