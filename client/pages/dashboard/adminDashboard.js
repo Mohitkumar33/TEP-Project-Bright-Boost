@@ -15,6 +15,7 @@ const AdminDashboard = () => {
   const [students, setStudents] = useState();
   const [questions, setQuestions] = useState();
   const [attendence, setAttendence] = useState();
+  const [questionHaving, setQuestionsHaving] = useState();
   const [questionsAnsweredOn, setQuestionsAnsweredOn] = useState();
   const [date, setDate] = useState();
 
@@ -71,6 +72,16 @@ const AdminDashboard = () => {
     );
 
     return resultArray;
+  }
+
+  function filterQuestionsByKeyword(questions, keyword) {
+    // Use the filter method to get questions that contain the keyword
+    if (keyword?.length > 0) {
+      const filteredQuestions = questions?.filter((question) => {
+        return question.question.toLowerCase().includes(keyword.toLowerCase());
+      });
+      return filteredQuestions;
+    }
   }
 
   function countQuestionsByDate(questions, givenDate) {
@@ -321,12 +332,30 @@ const AdminDashboard = () => {
         <div
           style={{ height: "10rem", width: "20rem", border: "1px solid black" }}
         >
-          Total number of questions answered on the selected date
+          Total number of questions answered in the selected session
           <input
             type="date"
             onChange={(e) => setQuestionsAnsweredOn(e.target.value)}
           />
           <div>{countQuestionsByDate(questions, questionsAnsweredOn)}</div>
+        </div>
+        <div
+          style={{ height: "10rem", width: "20rem", border: "1px solid black" }}
+        >
+          Questions whose content has
+          <input
+            type="text"
+            onChange={(e) => setQuestionsHaving(e.target.value)}
+            style={{ border: "1px solid black" }}
+            placeholder="Enter the content"
+          />
+          <div>
+            {filterQuestionsByKeyword(questions, questionHaving)?.map(
+              (item) => {
+                return <div>{item.question}</div>;
+              }
+            )}
+          </div>
         </div>
       </div>
     </div>
