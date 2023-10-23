@@ -22,18 +22,52 @@ const StudentDashboard = () => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 
+  function isCurrentTimeInRange() {
+    // Get the current date and time
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+
+    // Define the start and end times for your range
+    const startTime = 15; // 3:00 PM
+    const endTime = 17; // 5:59 PM
+
+    // Check if the current time is within the range
+    if (
+      (currentHour > startTime ||
+        (currentHour === startTime && currentMinute >= 30)) &&
+      (currentHour < endTime ||
+        (currentHour === endTime && currentMinute <= 30))
+    ) {
+      return true; // Current time is within the specified range
+    } else {
+      return false; // Current time is outside the specified range
+    }
+  }
+
   const submitQuestion = (subId, ques) => {
-    const dataToSend = {
-      studentName: localStorage.getItem("fullName"),
-      studentID: localStorage.getItem("studentId"),
-      question: ques,
-      subjectName: allSubjectsData?.find((item) => item.id == subId)
-        .subjectName,
-      subjectID: subId,
-      openAt: getCurrentDateTime(),
-    };
-    postQuestion(dataToSend, toast);
-    console.log(dataToSend, "data to send");
+    if (isCurrentTimeInRange()) {
+      const dataToSend = {
+        studentName: localStorage.getItem("fullName"),
+        studentID: localStorage.getItem("studentId"),
+        question: ques,
+        subjectName: allSubjectsData?.find((item) => item.id == subId)
+          .subjectName,
+        subjectID: subId,
+        openAt: getCurrentDateTime(),
+      };
+      postQuestion(dataToSend, toast);
+      console.log(dataToSend, "data to send");
+    } else {
+      toast({
+        title: "Error",
+        description: "Student can only ask the question in the session. Between 3:30 to 5:30 ",
+        status: "error",
+        position: "top-right",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
   };
   useEffect(() => {
     allSubjects()
