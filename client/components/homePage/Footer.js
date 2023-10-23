@@ -10,15 +10,8 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-
-const Logo = (props) => {
-  return (
-    <img
-      src="/assets/logos/Bright_boost_transparent.png"
-      style={{ height: "9rem" }}
-    />
-  );
-};
+import { Logo } from "../bbStrap";
+import Link from "next/link";
 
 const ListHeader = ({ children }) => {
   return (
@@ -33,6 +26,7 @@ export default function LargeWithLogoLeft() {
     <Box
       bg={useColorModeValue("gray.50", "gray.900")}
       color={useColorModeValue("gray.700", "gray.200")}
+      style={{ marginTop: "10rem" }}
     >
       <Container as={Stack} maxW={"6xl"} py={10}>
         <SimpleGrid
@@ -41,7 +35,9 @@ export default function LargeWithLogoLeft() {
         >
           <Stack spacing={6}>
             <Box>
-              <Logo color={useColorModeValue("gray.700", "white")} />
+              <Link href={"/studentLogin"}>
+              <Logo height={"9rem"} />
+              </Link>
             </Box>
             <Text fontSize={"sm"}>
               © 2023 Bright Boost. All rights reserved
