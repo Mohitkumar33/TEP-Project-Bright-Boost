@@ -2,12 +2,14 @@ import { useAuth } from "@/components/context/auth-context";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import api from "../utilities/apiConfig"; // Import your Axios instance
+import { useToast } from "@chakra-ui/react";
 
 const TeacherLogin = () => {
   const router = useRouter();
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const { authState, setAuthState } = useAuth();
+  const toast = useToast();
 
   const loginApi = async (email, password) => {
     try {
@@ -24,9 +26,25 @@ const TeacherLogin = () => {
         isAuth: true,
         userInfo: data.fullName,
       });
+      toast({
+        title: "Success",
+        description: "Login Successful",
+        status: "success",
+        position: "top-right",
+        duration: 2000,
+        isClosable: true,
+      });
       router.push("/dashboard/teacherDashboard");
     } catch (error) {
       console.log(error);
+      toast({
+        title: "Error",
+        description: error.response.data.message,
+        status: "error",
+        position: "top-right",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
   console.log(authState, "this is auth state");
