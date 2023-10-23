@@ -11,77 +11,38 @@ const StudentLogin = () => {
   const { authState, setAuthState } = useAuth();
   const toast = useToast();
 
-  function isCurrentTimeInRange() {
-    // Get the current date and time
-    const now = new Date();
-    const currentHour = now.getHours();
-    const currentMinute = now.getMinutes();
-
-    // Define the start and end times for your range
-    const startTime = 15; // 3:00 PM
-    const endTime = 17; // 5:59 PM
-
-    // Check if the current time is within the range
-    if (
-      (currentHour > startTime ||
-        (currentHour === startTime && currentMinute >= 30)) &&
-      (currentHour < endTime ||
-        (currentHour === endTime && currentMinute <= 30))
-    ) {
-      return true; // Current time is within the specified range
-    } else {
-      return false; // Current time is outside the specified range
-    }
-  }
-
   const loginApi = async (email, password) => {
-    if (isCurrentTimeInRange()) {
-      // console.log(
-      //   "Current time is within the specified range. You can run your function."
-      // );
-
-      try {
-        const { data } = await api.post("/auth/studentLogin", {
-          email: email,
-          password: password,
-        });
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("fullName", data.fullName);
-        localStorage.setItem("type", data.type);
-        localStorage.setItem("email", data.email);
-        localStorage.setItem("studentId", data.studentId);
-        setAuthState({
-          isAuth: true,
-          userInfo: data.fullName,
-        });
-        toast({
-          title: "Success",
-          description: "Login Successful",
-          status: "success",
-          position: "top-right",
-          duration: 2000,
-          isClosable: true,
-        });
-        router.push("/dashboard/studentDashboard");
-      } catch (error) {
-        console.log(error);
-        toast({
-          title: "Error",
-          description: error.response.data.message,
-          status: "error",
-          position: "top-right",
-          duration: 2000,
-          isClosable: true,
-        });
-      }
-    } else {
+    try {
+      const { data } = await api.post("/auth/studentLogin", {
+        email: email,
+        password: password,
+      });
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("fullName", data.fullName);
+      localStorage.setItem("type", data.type);
+      localStorage.setItem("email", data.email);
+      localStorage.setItem("studentId", data.studentId);
+      setAuthState({
+        isAuth: true,
+        userInfo: data.fullName,
+      });
+      toast({
+        title: "Success",
+        description: "Login Successful",
+        status: "success",
+        position: "top-right",
+        duration: 2000,
+        isClosable: true,
+      });
+      router.push("/dashboard/studentDashboard");
+    } catch (error) {
+      console.log(error);
       toast({
         title: "Error",
-        description:
-          "Please login when the session starts. Between 3:30pm to 5:30 pm",
+        description: error.response.data.message,
         status: "error",
         position: "top-right",
-        duration: 4000,
+        duration: 2000,
         isClosable: true,
       });
     }
