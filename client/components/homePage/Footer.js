@@ -35,8 +35,8 @@ export default function LargeWithLogoLeft() {
         >
           <Stack spacing={6}>
             <Box>
-              <Link href={"/studentLogin"}>
-              <Logo height={"9rem"} />
+              <Link href={"/"}>
+                <Logo height={"9rem"} />
               </Link>
             </Box>
             <Text fontSize={"sm"}>

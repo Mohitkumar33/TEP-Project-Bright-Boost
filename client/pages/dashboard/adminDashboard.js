@@ -202,8 +202,8 @@ const AdminDashboard = () => {
 
     return questionWithMaxTimeDifference;
   }
-  console.log(teachers);
-  console.log(students);
+  // console.log(teachers);
+  // console.log(students);
   return (
     <div>
       <h1
@@ -230,6 +230,7 @@ const AdminDashboard = () => {
           style={{ height: "10rem", width: "20rem", border: "1px solid black" }}
         >
           <h2>All teachers registered with bright boost</h2>
+          <hr style={{ marginTop: "4px", marginBottom: "4px" }}></hr>
           {teachers?.map((item) => {
             return <div key={item.id}>{item.fullName}</div>;
           })}
@@ -238,6 +239,7 @@ const AdminDashboard = () => {
           style={{ height: "10rem", width: "20rem", border: "1px solid black" }}
         >
           <h2>All Students registered with Bright boost</h2>
+          <hr style={{ marginTop: "4px", marginBottom: "4px" }}></hr>
           {students?.map((item) => {
             return <div key={item.id}>{item.fullName}</div>;
           })}
@@ -246,6 +248,7 @@ const AdminDashboard = () => {
           style={{ height: "10rem", width: "20rem", border: "1px solid black" }}
         >
           <h2>All Subjects that bright boost teach</h2>
+          <hr style={{ marginTop: "4px", marginBottom: "4px" }}></hr>
           {subjects?.map((item) => {
             return <div key={item.id}>{item.subjectName}</div>;
           })}
@@ -262,6 +265,7 @@ const AdminDashboard = () => {
           style={{ height: "10rem", width: "20rem", border: "1px solid black" }}
         >
           <p>Subject with maximum number of questions</p>
+          <hr style={{ marginTop: "4px", marginBottom: "4px" }}></hr>
           <div>
             {findMostFrequentSubject(questions).subject}{" "}
             <span>{findMostFrequentSubject(questions).count}</span>
@@ -271,6 +275,7 @@ const AdminDashboard = () => {
           style={{ height: "10rem", width: "20rem", border: "1px solid black" }}
         >
           Quesion which took maximum time
+          <hr style={{ marginTop: "4px", marginBottom: "4px" }}></hr>
           <div>{findQuestionWithMaxTimeDifference(questions).question}</div>
           <div>
             {(
@@ -284,7 +289,7 @@ const AdminDashboard = () => {
           style={{ height: "10rem", width: "20rem", border: "1px solid black" }}
         >
           Number of students attending the class on selected date
-          <br></br>
+          <hr style={{ marginTop: "4px", marginBottom: "4px" }}></hr>
           <input type="date" onChange={(e) => setDate(e.target.value)} />
           <div>
             {getUniqueStudentNamesForDate(date, attendence).map((item) => {
@@ -296,12 +301,14 @@ const AdminDashboard = () => {
           style={{ height: "10rem", width: "20rem", border: "1px solid black" }}
         >
           Total Answered Questions
+          <hr style={{ marginTop: "4px", marginBottom: "4px" }}></hr>
           <div>{countClosedStatus(questions)}</div>
         </div>
         <div
           style={{ height: "10rem", width: "20rem", border: "1px solid black" }}
         >
           Total Unanswered Questions{" "}
+          <hr style={{ marginTop: "4px", marginBottom: "4px" }}></hr>
           <div>{questions?.length - countClosedStatus(questions)}</div>
         </div>
         {/* <div
@@ -313,6 +320,7 @@ const AdminDashboard = () => {
           style={{ height: "10rem", width: "20rem", border: "1px solid black" }}
         >
           Student who asked most of the questions
+          <hr style={{ marginTop: "4px", marginBottom: "4px" }}></hr>
           <div>{findStudentWithMaxOccurrences(questions)}</div>
         </div>
         <div
@@ -320,6 +328,7 @@ const AdminDashboard = () => {
         >
           Question asked in each subject
           <div>
+          <hr style={{ marginTop: "4px", marginBottom: "4px" }}></hr>
             {countQuestionsBySubject(questions).map((item) => {
               return (
                 <div>
@@ -333,8 +342,10 @@ const AdminDashboard = () => {
           style={{ height: "10rem", width: "20rem", border: "1px solid black" }}
         >
           Total number of questions answered in the selected session
+          <hr style={{ marginTop: "4px", marginBottom: "4px" }}></hr>
           <input
             type="date"
+            style={{ border: "1px solid black", marginLeft: "5px" }}
             onChange={(e) => setQuestionsAnsweredOn(e.target.value)}
           />
           <div>{countQuestionsByDate(questions, questionsAnsweredOn)}</div>
@@ -349,6 +360,7 @@ const AdminDashboard = () => {
             style={{ border: "1px solid black" }}
             placeholder="Enter the content"
           />
+          <hr style={{ marginTop: "4px", marginBottom: "4px" }}></hr>
           <div>
             {filterQuestionsByKeyword(questions, questionHaving)?.map(
               (item) => {

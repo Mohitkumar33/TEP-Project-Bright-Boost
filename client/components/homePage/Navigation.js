@@ -62,7 +62,7 @@ export default function Navigation() {
           />
           <HStack spacing={8} alignItems={"center"}>
             <Box>
-              <Link href="/studentLogin">
+              <Link href="/">
                 <img
                   src="/assets/logos/Bright_boost_transparent.png"
                   style={{ height: "5rem" }}
@@ -80,13 +80,29 @@ export default function Navigation() {
             </HStack> */}
           </HStack>
           {authState.isAuth ? (
-            <div>
-              <p>Welcome {authState.userInfo}</p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                textAlign: "center",
+              }}
+            >
+              <p>
+                Welcome
+                <span style={{ fontWeight: "700", marginLeft: "5px" }}>
+                  {authState.userInfo}
+                </span>{" "}
+              </p>
               <button
                 onClick={() => {
                   localStorage.clear();
                   setAuthState({});
                   router.push("/");
+                }}
+                style={{
+                  border: "1px solid black",
+                  marginLeft: "10px",
+                  padding: "2px",
                 }}
               >
                 Logout
