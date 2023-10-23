@@ -9,6 +9,7 @@ import {
   IconProps,
   Center,
 } from "@chakra-ui/react";
+import Link from "next/link";
 
 export default function CallToActionWithIllustration() {
   return (
@@ -40,15 +41,17 @@ export default function CallToActionWithIllustration() {
           smart “Daily Agenda” every morning.
         </Text>
         <Stack spacing={6} direction={"row"}>
-          <Button
-            rounded={"full"}
-            px={6}
-            colorScheme={"orange"}
-            bg={"orange.400"}
-            _hover={{ bg: "orange.500" }}
-          >
-            Get started
-          </Button>
+          <Link href="/studentLogin">
+            <Button
+              rounded={"full"}
+              px={6}
+              colorScheme={"orange"}
+              bg={"orange.400"}
+              _hover={{ bg: "orange.500" }}
+            >
+              Get started
+            </Button>
+          </Link>
           <Button rounded={"full"} px={6}>
             Learn more
           </Button>
