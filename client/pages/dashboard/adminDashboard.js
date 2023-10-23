@@ -15,6 +15,7 @@ const AdminDashboard = () => {
   const [students, setStudents] = useState();
   const [questions, setQuestions] = useState();
   const [attendence, setAttendence] = useState();
+  const [questionsAnsweredOn, setQuestionsAnsweredOn] = useState();
   const [date, setDate] = useState();
 
   useEffect(() => {
@@ -45,6 +46,8 @@ const AdminDashboard = () => {
       });
   }, []);
 
+  console.log(questions, "all question");
+
   function countQuestionsBySubject(data) {
     const subjectCounts = {};
 
@@ -68,6 +71,31 @@ const AdminDashboard = () => {
     );
 
     return resultArray;
+  }
+
+  function countQuestionsByDate(questions, givenDate) {
+    // Initialize a counter for questions with matching dates
+    let count = 0;
+
+    // Convert the given date to a Date object for comparison
+    givenDate = new Date(givenDate);
+
+    // Iterate through the questions
+    questions?.forEach((question) => {
+      // Convert the question's openAt and closeAt dates to Date objects
+      const openAt = new Date(question.openAt);
+      const closeAt = new Date(question.closeAt);
+
+      // Check if both openAt and closeAt match the given date
+      if (
+        openAt.toDateString() === givenDate.toDateString() &&
+        closeAt.toDateString() === givenDate.toDateString()
+      ) {
+        count++;
+      }
+    });
+
+    return count;
   }
 
   function findStudentWithMaxOccurrences(data) {
@@ -156,7 +184,7 @@ const AdminDashboard = () => {
           questionWithMaxTimeDifference = {
             question: item.question,
             timeDifference: timeDifference,
-        };
+          };
         }
       }
     });
@@ -233,7 +261,13 @@ const AdminDashboard = () => {
         >
           Quesion which took maximum time
           <div>{findQuestionWithMaxTimeDifference(questions).question}</div>
-          <div>{(findQuestionWithMaxTimeDifference(questions).timeDifference/(1000 * 60 * 60)).toFixed(2)} hours</div>
+          <div>
+            {(
+              findQuestionWithMaxTimeDifference(questions).timeDifference /
+              (1000 * 60 * 60)
+            ).toFixed(2)}{" "}
+            hours
+          </div>
         </div>
         <div
           style={{ height: "10rem", width: "20rem", border: "1px solid black" }}
@@ -283,6 +317,16 @@ const AdminDashboard = () => {
               );
             })}
           </div>
+        </div>
+        <div
+          style={{ height: "10rem", width: "20rem", border: "1px solid black" }}
+        >
+          Total number of questions answered on the selected date
+          <input
+            type="date"
+            onChange={(e) => setQuestionsAnsweredOn(e.target.value)}
+          />
+          <div>{countQuestionsByDate(questions, questionsAnsweredOn)}</div>
         </div>
       </div>
     </div>
