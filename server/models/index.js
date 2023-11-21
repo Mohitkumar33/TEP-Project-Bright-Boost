@@ -20,14 +20,7 @@ if (config.use_env_variable) {
     config
   );
 }
-// sequelize = new Sequelize({
-//   username: "sql12658190",
-//   password: "Kx8bv8pflh",
-//   database: "sql12658190",
-//   host: "sql12.freemysqlhosting.net",
-//   dialect: "mysql",
-//   port: 3306,
-// });
+
 fs.readdirSync(__dirname)
   .filter((file) => {
     return (
