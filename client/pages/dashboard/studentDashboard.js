@@ -61,8 +61,7 @@ const StudentDashboard = () => {
     } else {
       toast({
         title: "Error",
-        description:
-          "Student can only ask the question in the session. Between 3:30 to 5:30 ",
+        description: "Student can only ask the question in the session. Between 3:30 to 5:30 ",
         status: "error",
         position: "top-right",
         duration: 2000,
@@ -155,13 +154,9 @@ const StudentDashboard = () => {
         DaysSubjects[daysOfWeek[dayOfWeek]]
       )} */}
       <div style={{ textAlign: "center" }}>
-
-
         {allSubjectsData?.filter((item) =>
           DaysSubjects[daysOfWeek[dayOfWeek]]?.includes(item.subjectName)
         ).length !== 0 && <p>Please select the subject</p>}
-
-        
         {allSubjectsData
           ?.filter((item) =>
             DaysSubjects[daysOfWeek[dayOfWeek]]?.includes(item.subjectName)
@@ -189,18 +184,13 @@ const StudentDashboard = () => {
             <p style={{ marginTop: "1rem", marginBottom: "5px" }}>
               Please enter the question detail:
             </p>
-            <textarea
+            <input
               type="text"
               onChange={(e) => setQuestion(e.target.value)}
               style={{ border: "1px solid black", marginBottom: "2rem" }}
             />
             <button
-              style={{
-                border: "1px solid black",
-                margin: "auto",
-                // marginLeft: "1rem",
-                display: "block",
-              }}
+              style={{ border: "1px solid black", marginLeft: "1rem" }}
               onClick={() => submitQuestion(selectedSubject, question)}
             >
               Submit
